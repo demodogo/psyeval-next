@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String  @id @default(uuid())
+  email         String  @unique
+  name          String?
+  lastName      String?
+  password_hash String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  evaluationsCreated  EvaluationAccess[] @relation("creator")
+  evaluationsAssigned EvaluationAccess[] @relation("evaluator")
+}
+model Evaluation {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  label       String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  disabled    Boolean   @default(false)
+  disabledAt  DateTime?
+
+  accesses EvaluationAccess[]
+}
+
+enum EvaluationAccessStatus {
+  pending
+  used
+  revoked
+}
+
+enum EvaluationResultStatus {
+  not_started
+  in_progress
+  completed
+  pending_review
+  reviewed
+}
+
+model EvaluationAccess {
+  id           String    @id @default(uuid())
+  token        String    @unique
+  evaluationId String
+  createdAt    DateTime  @default(now())
+  createdBy    String
+  assignedTo   String
+  expiresAt    DateTime?
+  usedAt       DateTime?
+  revokedAt    DateTime?
+
+  metadata Json?
+
+  participantEmail     String
+  participantFirstName String
+  participantLastName  String
+
+  evaluationAccessStatus EvaluationAccessStatus @default(pending)
+  evaluationResultStatus EvaluationResultStatus @default(not_started)
+
+  evaluation Evaluation @relation(fields: [evaluationId], references: [id])
+  evaluator  User       @relation("evaluator", fields: [assignedTo], references: [id])
+  creator    User       @relation("creator", fields: [createdBy], references: [id])
+}
