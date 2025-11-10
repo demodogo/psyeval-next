@@ -1,9 +1,5 @@
-import Image from "next/image";
+import { Login } from '@/components/auth/login';
 
 export default function Home() {
-  return (
-    <div className="h-screen text-muted text-3xl w-screen">
-        is this inclusive sans
-    </div>
-  );
+  return <Login />;
 }

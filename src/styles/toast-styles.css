@@ -1,0 +1,63 @@
+.Toastify__toast {
+    border-radius: 0.75rem !important;
+    font-family: 'Inclusive Sans', system-ui, sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 1rem !important;
+    color: var(--foreground);
+    background: var(--background);
+    border-left: 4px solid transparent;
+}
+
+.Toastify__toast-body {
+    color: var(--foreground);
+}
+
+.Toastify__toast--success {
+    background: #f0f7ff !important;
+    border-left-color: var(--accent) !important;
+    color: #0d4e8a !important;
+}
+
+/* ERROR: cálido, pero no grita */
+.Toastify__toast--error {
+    background: #fff2f2 !important;
+    border-left-color: #e64a4a !important;
+    color: #9b2020 !important;
+}
+
+/* INFO: más neutro, con el mismo tono base del accent */
+.Toastify__toast--info {
+    background: #f5f8ff !important;
+    border-left-color: var(--accent) !important;
+    color: #1a4c9c !important;
+}
+
+.Toastify__toast--warning {
+    background: #fff9ec !important;
+    border-left-color: #f4c84a !important;
+    color: #7a5d00 !important;
+}
+
+.Toastify__progress-bar {
+    height: 3px !important;
+    background: linear-gradient(
+            90deg,
+            var(--primary),
+            var(--accent)
+    ) !important;
+    border-radius: 0 0 8px 8px;
+    opacity: 0.85;
+}
+
+/* Botón de cierre */
+.Toastify__close-button > svg {
+    fill: var(--muted) !important;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.Toastify__close-button:hover > svg {
+    opacity: 1;
+    transform: scale(1.1);
+}
