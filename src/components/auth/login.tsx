@@ -5,13 +5,13 @@ import { Eye, LucideMail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { authSchema, AuthSchema } from '@/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { useLogin } from '@/hooks/queries/useLogin';
 
 export function Login() {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const router = useRouter();
+  const { mutate: login } = useLogin({ onSuccess: () => router.push('/dashboard') });
   const {
     handleSubmit,
     register,
@@ -21,15 +21,7 @@ export function Login() {
   });
 
   async function onSubmit(data: AuthSchema) {
-    try {
-      const response = await axios.post('/api/auth/login', data);
-      if (response.status === 200) {
-        router.push('/dashboard');
-      }
-      toast.success('¡Bienvenid@!', { toastId: 'login-success' });
-    } catch (error) {
-      return toast.error('Error en el inicio de sesión', { toastId: 'login-error' });
-    }
+    login(data);
   }
 
   return (
