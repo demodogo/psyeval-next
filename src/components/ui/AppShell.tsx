@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -17,11 +17,16 @@ type AppShellProps = {
 };
 export function AppShell({ children, user }: AppShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
   const navItems = getRoleNavItems(user?.role || '');
   const isActive = (href: string) => pathname === href;
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+  }, [router, user]);
   async function onLogout() {
     try {
       const response = await axios.post('/api/auth/logout');
@@ -33,6 +38,7 @@ export function AppShell({ children, user }: AppShellProps) {
       return toast.error('Error al cerrar sesión', { toastId: 'logout-error' });
     }
   }
+  if (!user) return null;
 
   return (
     <>

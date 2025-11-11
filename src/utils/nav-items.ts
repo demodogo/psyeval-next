@@ -1,4 +1,4 @@
-import { Calendar, ClipboardList, FileText, UserStar } from 'lucide-react';
+import { ClipboardList, UserStar } from 'lucide-react';
 
 export const navItems = [
   {
@@ -15,28 +15,6 @@ export const navItems = [
     href: '/dashboard/evaluaciones',
     Icon: ClipboardList,
     slug: 'evaluaciones',
-    role: ['evaluator'],
-  },
-  {
-    label: 'Historial',
-    single_label: 'Historial',
-    href: '/dashboard/historial',
-    Icon: FileText,
-    slug: 'historial',
-    role: ['evaluator'],
-  },
-  {
-    label: 'Calendario',
-    href: '/dashboard/calendario',
-    Icon: Calendar,
-    slug: 'calendario',
-    role: ['evaluator'],
-  },
-  {
-    label: 'Documentos',
-    href: '/dashboard/documentos',
-    Icon: FileText,
-    slug: 'documentos',
     role: ['evaluator'],
   },
   {

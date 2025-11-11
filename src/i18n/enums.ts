@@ -10,6 +10,7 @@ export const enumLabels = {
     pending: 'Pendiente',
     used: 'Usado',
     revoked: 'Revocado',
+    expired: 'Expirado',
   },
   Role: {
     admin: 'Administrador',

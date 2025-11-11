@@ -53,8 +53,6 @@ model Evaluation {
   updatedAt   DateTime  @updatedAt
   disabled    Boolean   @default(false)
   disabledAt  DateTime?
-
-  accesses EvaluationAccess[]
 }
 
 enum EvaluationAccessStatus {
@@ -72,15 +70,16 @@ enum EvaluationResultStatus {
 }
 
 model EvaluationAccess {
-  id           String    @id @default(uuid())
-  token        String    @unique
-  evaluationId String
-  createdAt    DateTime  @default(now())
-  createdBy    String
-  assignedTo   String
-  expiresAt    DateTime?
-  usedAt       DateTime?
-  revokedAt    DateTime?
+  id         String    @id @default(uuid())
+  token      String    @unique
+  createdAt  DateTime  @default(now())
+  createdBy  String
+  assignedTo String
+  expiresAt  DateTime?
+  usedAt     DateTime?
+  revokedAt  DateTime?
+
+  evaluationIds String[]
 
   metadata Json?
 
@@ -91,7 +90,6 @@ model EvaluationAccess {
   evaluationAccessStatus EvaluationAccessStatus @default(pending)
   evaluationResultStatus EvaluationResultStatus @default(not_started)
 
-  evaluation Evaluation @relation(fields: [evaluationId], references: [id])
-  evaluator  User       @relation("evaluator", fields: [assignedTo], references: [id])
-  creator    User       @relation("creator", fields: [createdBy], references: [id])
+  evaluator User @relation("evaluator", fields: [assignedTo], references: [id])
+  creator   User @relation("creator", fields: [createdBy], references: [id])
 }
