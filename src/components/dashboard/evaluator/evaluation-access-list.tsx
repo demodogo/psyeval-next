@@ -11,7 +11,6 @@ export function EvaluationAccessList() {
   const { data: evaluationAccesses, isLoading } = useEvaluationAccesses();
   if (isLoading) return <p>Cargando...</p>;
 
-  console.log(evaluationAccesses);
   function copyToClipboard(value: string) {
     try {
       navigator.clipboard.writeText(value).then(() => {

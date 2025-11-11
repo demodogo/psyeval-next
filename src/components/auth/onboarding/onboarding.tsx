@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { TokenError } from '@components/auth/onboarding/token-error';
+import { TokenError } from '@components/auth/token-error';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { OnboardingForm } from '@components/auth/onboarding/onboarding-form';
@@ -26,6 +26,7 @@ export function Onboarding() {
     };
     validateToken();
   }, [token]);
+
   if (loading) return <h1>Cargando...</h1>;
 
   return (

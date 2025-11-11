@@ -6,13 +6,16 @@ import { onboardingSchema, OnboardingSchema } from '@/schemas/onboarding.schema'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { Eye } from 'lucide-react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useProcessOnboarding } from '@/hooks/queries/useOnboarding';
 
 export function OnboardingForm({ token }: { token: string }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
+
   const router = useRouter();
+  const { mutate: processOnboarding } = useProcessOnboarding({
+    onSuccess: () => router.push('/dashboard'),
+  });
   const {
     register,
     handleSubmit,
@@ -22,19 +25,7 @@ export function OnboardingForm({ token }: { token: string }) {
   });
 
   async function onSubmit(data: OnboardingSchema) {
-    try {
-      const response = await axios.post('/api/auth/invitations/onboarding', {
-        ...data,
-        token: token,
-      });
-      if (response.status === 200) {
-        router.push('/dashboard');
-        toast('¡Bienvenid@!', { toastId: 'onboarding-success' });
-      }
-    } catch (error) {
-      toast.error('Error al crear la cuenta', { toastId: 'onboarding-error' });
-      console.log(error);
-    }
+    processOnboarding({ data, token });
   }
 
   return (
