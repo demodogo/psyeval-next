@@ -13,19 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserInvitation {
+  id               String    @id @default(uuid())
+  email            String    @unique
+  token            String    @unique
+  createdAt        DateTime  @default(now())
+  expiresAt        DateTime?
+  usedAt           DateTime?
+  didCreateAccount Boolean   @default(false)
+}
+
+enum RoleEnum {
+  admin
+  evaluator
+}
+
 model User {
-  id            String  @id @default(uuid())
-  email         String  @unique
+  id            String   @id @default(uuid())
+  email         String   @unique
   name          String?
   lastName      String?
   password_hash String
+  role          RoleEnum @default(evaluator)
+  is_active     Boolean  @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  disabledAt          DateTime?
   evaluationsCreated  EvaluationAccess[] @relation("creator")
   evaluationsAssigned EvaluationAccess[] @relation("evaluator")
 }
+
 model Evaluation {
   id          String    @id @default(uuid())
   slug        String    @unique
@@ -35,8 +53,6 @@ model Evaluation {
   updatedAt   DateTime  @updatedAt
   disabled    Boolean   @default(false)
   disabledAt  DateTime?
-
-  accesses EvaluationAccess[]
 }
 
 enum EvaluationAccessStatus {
@@ -54,15 +70,16 @@ enum EvaluationResultStatus {
 }
 
 model EvaluationAccess {
-  id           String    @id @default(uuid())
-  token        String    @unique
-  evaluationId String
-  createdAt    DateTime  @default(now())
-  createdBy    String
-  assignedTo   String
-  expiresAt    DateTime?
-  usedAt       DateTime?
-  revokedAt    DateTime?
+  id         String    @id @default(uuid())
+  token      String    @unique
+  createdAt  DateTime  @default(now())
+  createdBy  String
+  assignedTo String
+  expiresAt  DateTime?
+  usedAt     DateTime?
+  revokedAt  DateTime?
+
+  evaluationIds String[]
 
   metadata Json?
 
@@ -73,7 +90,6 @@ model EvaluationAccess {
   evaluationAccessStatus EvaluationAccessStatus @default(pending)
   evaluationResultStatus EvaluationResultStatus @default(not_started)
 
-  evaluation Evaluation @relation(fields: [evaluationId], references: [id])
-  evaluator  User       @relation("evaluator", fields: [assignedTo], references: [id])
-  creator    User       @relation("creator", fields: [createdBy], references: [id])
+  evaluator User @relation("evaluator", fields: [assignedTo], references: [id])
+  creator   User @relation("creator", fields: [createdBy], references: [id])
 }

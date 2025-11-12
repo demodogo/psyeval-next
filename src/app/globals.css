@@ -2,11 +2,13 @@
 
 :root {
   --background: #fffdfe;
-  --foreground: #111;
+  --foreground: #2e2e2e;
   --muted: #999;
   --primary: #5f4bb6;
   --primary-dark: #241765;
   --secondary: #abb6cf;
+  --accent: #4da1ff;
+    --accent-dark: #1e518a;
 }
 
 @theme inline {
@@ -16,6 +18,8 @@
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
+    --color-accent: var(--accent);
+    --color-accent-dark: var(--accent-dark);
 }
 
 
