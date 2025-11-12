@@ -32,8 +32,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ updatedUser });
-  } catch (error) {
-    console.log(error);
+  } catch {
     return NextResponse.json({ error: 'Error al obtener los usuarios ' }, { status: 500 });
   }
 }

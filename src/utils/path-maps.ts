@@ -8,5 +8,5 @@ export function getAllowedPaths(role: string | null) {
       return ['/dashboard', '/dashboard/evaluaciones'];
   }
 
-  return ['/', '/evaluaciones/access', '/onboarding'];
+  return ['/', '/participant/access', '/onboarding'];
 }

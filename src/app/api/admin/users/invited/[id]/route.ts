@@ -17,8 +17,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
-    console.log(error);
+  } catch {
     return NextResponse.json({ error: 'Error al revocar la invitación' }, { status: 500 });
   }
 }

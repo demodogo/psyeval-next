@@ -31,7 +31,7 @@ export function EvaluationAccessForm() {
       <TextField label={'Correo del postulante'} {...register('participantEmail')} error={errors.participantEmail?.message} />
       <TextField label={'Nombre'} {...register('participantFirstName')} error={errors.participantFirstName?.message} />
       <TextField label={'Apellido'} {...register('participantLastName')} error={errors.participantLastName?.message} />
-      <DateInput label={'Fecha de expiración'} id={'expiresAt'} {...register('expiresAt')} error={errors.expiresAt?.message} />
+      <DateInput label={'Fecha de expiración'} id={'expiresAt'} {...register('expiresAt')} error={errors.expiresAt?.message} helperText={'(Opcional)'} />
       <div className={'col-span-1 lg:col-span-2 flex flex-col gap-4'}>
         <span className={'text-sm text-primary'}>Selecciona las evaluaciones a las que quieres dar acceso:</span>
         {loadingData ? (

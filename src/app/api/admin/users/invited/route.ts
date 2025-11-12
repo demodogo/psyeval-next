@@ -7,8 +7,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json({ invitations });
-  } catch (error) {
-    console.log(error);
+  } catch {
     return NextResponse.json({ error: 'Error al obtener las invitaciones' }, { status: 500 });
   }
 }

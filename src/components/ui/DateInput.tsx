@@ -11,7 +11,10 @@ export function DateInput({ label, helperText, error, className = '', id, ...res
   const openPicker = () => (document.getElementById(id) as HTMLInputElement | null)?.showPicker?.();
   return (
     <label className="text-foreground/90 grid gap-1" htmlFor={id}>
-      {label && <span className="text-xs font-medium tracking-wide">{label}</span>}
+      <div className={'flex items-center gap-1'}>
+        {label && <span className="text-xs font-medium tracking-wide">{label}</span>}
+        {helperText ? <span className="text-foreground/50 text-xs">{helperText}</span> : null}
+      </div>
       <div className={`relative ${className}`}>
         <input
           id={id}
@@ -34,7 +37,7 @@ export function DateInput({ label, helperText, error, className = '', id, ...res
         </svg>
         <button type="button" onClick={openPicker} className="absolute top-0 left-0 h-full w-8 rounded-l-lg" aria-label="Abrir calendario" />
       </div>
-      {error ? <span className="text-xs text-red-400">{error}</span> : helperText ? <span className="text-foreground/50 text-xs">{helperText}</span> : null}
+      {error ? <span className="text-xs text-red-400">{error}</span> : null}
     </label>
   );
 }
